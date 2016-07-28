@@ -114,13 +114,36 @@ function cssBundle() {
  */
 
 gulp.task('useref', function(){
-    return gulp.src(config.html.app)
-               .pipe($.useref({
-                    base: '../' // Specify the output folder relative to the 'config.html.dist'
-               }))
-               .pipe($.if('*.js', $.uglify()))
-               .pipe($.if('*.css', $.cssnano()))
-               .pipe(gulp.dest(config.html.dist));
+    // return gulp.src(config.html.app)
+    //            .pipe($.useref({
+    //                 base: '../' // Specify the output folder relative to the 'config.html.dist'
+    //            }))
+    //            .pipe($.if('*.js', $.uglify()))
+    //            .pipe($.if('*.css', $.cssnano()))
+    //            // .pipe($.if('*.js', gulp.dest(config.js.dist)))
+    //            // .pipe($.if('*.css', gulp.dest(config.css.dist)))
+    //            // .pipe($.if('*.php', gulp.dest(config.html.dist)));
+    //            .pipe(gulp.dest(config.html.dist));
+
+    var cssFilter = $.filter(['**/*.css'], { restore: true });
+    var jsFilter = $.filter(['**/*.js'], { restore: true });
+    var phpFilter = $.filter(['**/*.php'], { restore: true });
+
+    var stream = gulp.src(config.html.app)
+        .pipe($.useref({
+            base: '../'
+        }))
+        .pipe(cssFilter)
+        .pipe($.cssnano())
+        .pipe(gulp.dest(config.css.dist))
+        .pipe(cssFilter.restore)
+        .pipe(jsFilter)
+        .pipe($.uglify())
+        .pipe(gulp.dest(config.js.dist))
+        .pipe(jsFilter.restore)
+        .pipe(phpFilter)
+        .pipe(gulp.dest(config.html.dist));
+    return stream;
 });
 
 /**

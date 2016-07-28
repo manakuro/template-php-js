@@ -1,6 +1,5 @@
 <?php 
     include 'template/header.php';
-
 ?>
     
     <main class="page-main">
