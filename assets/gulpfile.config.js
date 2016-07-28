@@ -3,7 +3,7 @@ module.exports = function() {
         'document_root': 'http://vanarts_portfolio',
         'js': {
             'app': './app/js/**/*.js',
-            'ignore': './app/js/vendor/**/*.js',
+            'ignore': './app/js/vendors/**/*.js',
             'dist': './dist/js/',
             'bundled': 'bundle.js'
         },
@@ -16,7 +16,7 @@ module.exports = function() {
             'dist': './dist/img/'
         },
         'html': {
-            'app': './app/template/**/*.php',
+            'app': ['./app/template/header.php', './app/template/footer.php'],
             'dist': '../template/'
         },
         'fonts': {
